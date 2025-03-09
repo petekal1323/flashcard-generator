@@ -1,0 +1,37 @@
+/* Flashcard.scss */
+
+.flashcard {
+    perspective: 1000px;
+    margin: 1rem auto;
+    max-width: 400px;
+    &__content {
+        position: relative;
+        width: 100%;
+        min-height: 150px;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        &--flipped {
+            transform: rotateY(180deg);
+        }
+    }
+
+    &__front,
+    &__back {
+        position: absolute;
+        width: 100%;
+        backface-visibility: hidden;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    &__front {
+        z-index: 2;
+    }
+
+    &__back {
+        transform: rotateY(180deg);
+    }
+}
