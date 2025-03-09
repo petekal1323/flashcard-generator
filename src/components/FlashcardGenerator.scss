@@ -3,21 +3,30 @@
 .flashcard-generator {
     padding: 2rem;
     max-width: 1000px;
-    margin:0 auto;
+    margin: 0 auto;
     text-align: center;
-    &__title{
+    &__title {
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
         color: #333;
         font-weight: 500;
     }
-    &__form{
+    &__form {
         display: flex;
-        flex-direction:column;
+        flex-direction: column;
         gap: 1rem;
-        margin-bottom: 2rem;
+        margin: 2rem 0 1rem;
     }
-    &__input{
+    &__label {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.8rem;
+        color: #888;
+        font-weight: 500;
+        text-align: left;
+        margin-top: 0.5rem;
+    }
+    &__input {
         padding: 1rem;
         font-size: 1rem;
         border: 1px solid #ccc;
@@ -25,7 +34,7 @@
         width: 100%;
     }
 
-    &__file-input{
+    &__file-input {
         padding: 1rem;
         font-size: 1rem;
         border: 1px solid #ccc;
@@ -33,7 +42,9 @@
         width: 100%;
     }
 
-    &__btn{
+    &__btn {
+        width: calc(100% - 10rem);
+        align-self: center;
         padding: 1rem;
         font-size: 1.2rem;
         color: #fff;
@@ -41,34 +52,36 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
+        transition:
+            background-color 0.3s ease,
+            transform 0.3s ease;
 
-        &:hover{
+        &:hover {
             background-color: #ff9779;
             transform: scale(1.03);
         }
 
-        &:disabled{
+        &:disabled {
             background-color: #ccc;
             cursor: not-allowed;
         }
     }
-    &__display{
-        margin-top:2rem;
+    &__display {
+        margin-top: 2rem;
     }
-    &__flashcard-container{
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    &__flashcard-container {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 1rem;
         border-radius: 8px;
         background-color: #fff;
     }
-    &__nav{
+    &__nav {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 1rem;
         margin-top: 1rem;
-        &__nav-btn{
+        &__nav-btn {
             padding: 0.8rem 1.2rem;
             font-size: 1rem;
             border: none;
@@ -77,23 +90,22 @@
             background-color: #28a745;
             color: #fff;
             transition: background-color 0.3s ease;
-            &:hover{
+            &:hover {
                 background-color: #218838;
             }
-            &:disabled{
+            &:disabled {
                 background-color: #ccc;
                 cursor: not-allowed;
             }
         }
-        &__nav-count{
+        &__nav-count {
             font-size: 1rem;
             color: #333;
         }
     }
-    &__no-cards{
-        font-size: .9rem;
-        color: #777;
-
+    &__no-cards {
+        font-size: 1rem;
+        margin: 0;
+        font-weight: 500;
     }
-
 }

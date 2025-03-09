@@ -27,7 +27,6 @@ function FlashcardGenerator() {
     async function handleGenerateFlashcards(e) {
         e.preventDefault();
         console.log("Form submitted. Generating flashcards...");
-
         console.log("Topic:", topic);
         console.log("File Content:", fileContent);
         console.log("Number of Cards:", numCards);
@@ -64,9 +63,11 @@ function FlashcardGenerator() {
     return (
         <div className='flashcard-generator'>
             <h2 className='flashcard-generator__title'>Generate Your Flashcards</h2>
-
             <form className="flashcard-generator__form" onSubmit={handleGenerateFlashcards}>
+                <div>
+                <label htmlFor="topicInput" className="flashcard-generator__label">Enter a topic</label>
                 <input
+                    id="topicInput"
                     type="text"
                     placeholder="Enter a topic (like World History"
                     value={topic}
@@ -74,19 +75,29 @@ function FlashcardGenerator() {
                     className="flashcard-generator__input"
                     required
                 />
+                </div>
+
+                <div>
+                <label htmlFor="numCardsInput" className="flashcard-generator__label">How many flashcards do you want?</label>
                 <input
+                    id="numCardsInput"
                     type="number"
-                    placeholder="Number of flashcards"
                     value={numCards}
                     onChange={(e) => setNumCards(e.target.value)}
                     className="flashcard-generator__input"
-                    required
+                    min="1"
                 />
+                </div>
+
+                <div>
+                <label htmlFor="fileInput" className="flashcard-generator__label">Upload notes (optional)</label>
                 <input
+                    id="fileInput"
                     type="file"
                     onChange={handleFileUpload}
                     className="flashcard-generator__file-input"
                 />
+                </div>
 
                 <button
                     type="submit"
