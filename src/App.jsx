@@ -1,13 +1,10 @@
-import Flashcard from './components/Flashcard';
+import LandingPage from './components/LandingPage';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <Flashcard
-        question="What is 2 + 2?"
-        answer="4"
-      />
+      <LandingPage />
     </div>
   );
 }
