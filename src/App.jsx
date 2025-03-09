@@ -1,14 +1,15 @@
-
+import LandingPage from './components/LandingPage';
 import './App.scss'
 
 function App() {
 
 
   return (
+    <div className='App'>
+      <LandingPage />
+    </div>
 
-      <h1>Hello</h1>
-
-  )
+  );
 }
 
-export default App
+export default App;
