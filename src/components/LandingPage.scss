@@ -1,0 +1,61 @@
+/*LandingPage*/
+
+.landing {
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(90deg, #74ebd5 0%, #acb6e5 100%);
+        background-size: 400% 400%;
+        animation: bg_gradient_animation 30s ease-in-out infinite;
+    }
+    &__header {
+        text-align: center;
+        color: #fff;
+        max-width: 650px;
+        padding: 40px;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+    }
+
+    &__title {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    &__subtitle {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+    &__cta {
+        padding: 0.8rem 2rem;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #ff7e67;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition:
+            background-color 0.3s ease,
+            transform 0.3s ease;
+
+        &:hover {
+            background-color: #ff9779;
+            transform: scale(1.02);
+        }
+    }
+}
+
+@keyframes bg_gradient_animation {
+    0% {
+        background-position: 0% 50%; //left edge centered vertically
+    }
+    50% {
+        background-position: 100% 50%; //right edge centered vertically
+    }
+    100% {
+        background-position: 0% 50%; // back to start
+    }
+}
