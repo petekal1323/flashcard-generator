@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.scss';
 
-function LandingPage(props) {
+function LandingPage() {
     const navigate = useNavigate();
 
     const handleStart = () => {

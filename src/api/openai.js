@@ -1,29 +1,32 @@
 import axios from 'axios';
 
 export async function generateFlashcards(topic, fileContent, numCards) {
-
   const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
   if (!API_KEY) {
     console.error('API key not found');
     return [];
   }
 
+  // Optionally, truncate fileContent to avoid sending an excessively long prompt.
+  const safeFileContent = fileContent ? fileContent.substring(0, 2000) : '';
 
   const prompt =
-    `Generate ${numCards} flashcards for the topic "${topic}". ` +
-    (fileContent ? `Use the following notes as context: ${fileContent}` : "") +
-    ` Return the result as a JSON array where each object has "question" and "answer" keys.`;
+    `Generate exactly ${numCards} flashcards for the topic "${topic}". ` +
+    (safeFileContent ? `Use the following notes as context: ${safeFileContent}` : "") +
+    ` Return only a valid JSON array (with no additional text) where each object has exactly "question" and "answer" keys.`;
 
   const data = {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: prompt }],
-    max_tokens: 300,
+    max_tokens: 600, // Increase this value to allow for a complete response
     temperature: 0.7
   };
 
+
   try {
     const res = await axios.post(
-      "https://api.openai.com/v1/chat/completions",data,
+      "https://api.openai.com/v1/chat/completions",
+      data,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -36,17 +39,18 @@ export async function generateFlashcards(topic, fileContent, numCards) {
     const apiOutput = res.data.choices[0].message.content;
     console.log("API output:", apiOutput);
 
-    if(!apiOutput || apiOutput.trim() === "") {
-      console.error("API response was empty");
-      return [];
-    }
+    // Clean up any markdown formatting that might be present.
+    const cleanedOutput = apiOutput
+      .replace(/^```(?:json)?/i, '')
+      .replace(/```$/, '')
+      .trim();
 
     try {
-      // Parse the API output as JSON.
-      const flashcards = JSON.parse(apiOutput);
+      const flashcards = JSON.parse(cleanedOutput);
       return flashcards;
     } catch (parseError) {
-      console.error("Error parsing JSON:", parseError);
+      console.error("Error parsing JSON. Raw output:", cleanedOutput);
+      console.error("Parsing error details:", parseError);
       return [];
     }
   } catch (error) {

@@ -16,6 +16,7 @@ function Flashcard(props) {
 
     return (
         <div className='flashcard'>
+            <div className="flashcard__direction">Tap to show answer</div>
             <div className={contentClassName} onClick={handleFlip}>
                 <div className='flashcard__front'>
                     {props.question}
