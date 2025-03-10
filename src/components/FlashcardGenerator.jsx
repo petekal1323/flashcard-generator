@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Flashcard from './Flashcard';
 import { generateFlashcards } from '../api/openai';
+import Spinner from './Spinner';
 import './FlashcardGenerator.scss';
 
 function FlashcardGenerator() {
@@ -109,40 +110,43 @@ function FlashcardGenerator() {
             </form>
 
             <div className="flashcard-generator__display">
-                {flashcards.length > 0 ? (
-                    <div className="flashcard-generator__flashcard-container">
-                        <Flashcard
-                            question={flashcards[currentCardIndex].question}
-                            answer={flashcards[currentCardIndex].answer}
-                        />
-                        <div className="flashcard-generator__nav">
-                            <button
-                                onClick={goToPrevCard}
-                                disabled={currentCardIndex === 0}
-                                className="flashcard-generator__nav-btn"
-                            >
-                                Prev
-                            </button>
-                            <span className="flashcard-generator__nav-count">
-                                {currentCardIndex + 1} / {flashcards.length}
-                            </span>
-                            <button
-                                onClick={goToNextCard}
-                                disabled={currentCardIndex === flashcards.length - 1}
-                                className="flashcard-generator__nav-btn"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    <p className="flashcard-generator__no-cards">
-                        Enter a topic and upload notes (optional), then click "Generate Flashcards"
-                    </p>
-                )}
+        {loading ? (
+          <Spinner />
+        ) : flashcards.length > 0 ? (
+          <div className="flashcard-generator__flashcard-container">
+            <Flashcard
+              question={flashcards[currentCardIndex].question}
+              answer={flashcards[currentCardIndex].answer}
+            />
+            <div className="flashcard-generator__nav">
+              <button
+                onClick={goToPrevCard}
+                disabled={currentCardIndex === 0}
+                className="flashcard-generator__nav-btn"
+              >
+                Prev
+              </button>
+              <span className="flashcard-generator__nav-count">
+                {currentCardIndex + 1} / {flashcards.length}
+              </span>
+              <button
+                onClick={goToNextCard}
+                disabled={currentCardIndex === flashcards.length - 1}
+                className="flashcard-generator__nav-btn"
+              >
+                Next
+              </button>
             </div>
-        </div>
-    );
+          </div>
+        ) : (
+          // If no flashcards have been generated, show a placeholder message.
+          <p className="flashcard-generator__no-cards">
+            Enter a topic and upload notes (optional), then click "Generate Flashcards"
+          </p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default FlashcardGenerator;

@@ -34,7 +34,7 @@
         padding: 0.8rem 2rem;
         font-size: 1.2rem;
         color: #fff;
-        background-color: #ff7e67;
+        background-color: hsl(9, 100%, 70%);
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -43,7 +43,7 @@
             transform 0.3s ease;
 
         &:hover {
-            background-color: #ff9779;
+            background-color: hsl(9, 100%, 65%);
             transform: scale(1.02);
         }
     }

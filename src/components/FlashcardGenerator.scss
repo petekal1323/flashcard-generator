@@ -2,7 +2,8 @@
 
 .flashcard-generator {
     padding: 2rem;
-    max-width: 1000px;
+    width: calc(100% - 50rem);
+    min-width: 400px;
     margin: 0 auto;
     text-align: center;
     &__title {
@@ -43,12 +44,12 @@
     }
 
     &__btn {
-        width: calc(100% - 10rem);
+        width: 25rem;
         align-self: center;
         padding: 1rem;
         font-size: 1.2rem;
         color: #fff;
-        background-color: #ff7e67;
+        background-color: hsl(9, 100%, 70%);
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -57,7 +58,7 @@
             transform 0.3s ease;
 
         &:hover {
-            background-color: #ff9779;
+            background-color: hsl(9, 100%, 65%);
             transform: scale(1.03);
         }
 
@@ -81,31 +82,26 @@
         align-items: center;
         gap: 1rem;
         margin-top: 1rem;
-        &__nav-btn {
-            padding: 0.8rem 1.2rem;
-            font-size: 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #28a745;
-            color: #fff;
-            transition: background-color 0.3s ease;
-            &:hover {
-                background-color: #218838;
-            }
-            &:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
+    }
+    &__nav-btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: hsl(195, 41%, 44%);
+        color: #fff;
+        transition: background-color 0.3s ease;
+        &:hover {
+            background-color: hsl(195, 41%, 38%);
         }
-        &__nav-count {
-            font-size: 1rem;
-            color: #333;
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
     }
-    &__no-cards {
+    &__nav-count {
         font-size: 1rem;
-        margin: 0;
-        font-weight: 500;
+        color: #333;
     }
 }
