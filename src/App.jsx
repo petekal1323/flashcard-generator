@@ -1,25 +1,17 @@
-// import LandingPage from './components/LandingPage';
-// import './App.scss';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <LandingPage />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
 import FlashcardGenerator from './components/FlashcardGenerator';
 import './App.scss';
 
 function App() {
+
   return (
-    <div className="App">
-      <FlashcardGenerator />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/flashcard-generator" element={<FlashcardGenerator />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

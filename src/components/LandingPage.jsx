@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.scss';
 
 function LandingPage(props) {
+    const navigate = useNavigate();
+
+    const handleStart = () => {
+        navigate('/flashcard-generator');
+    };
+
     return (
         <div className='landing__container'>
             <header className='landing__header'>
@@ -8,7 +15,7 @@ function LandingPage(props) {
                 <p className='landing__subtitle'>
                 Enter your text or upload a file, and the AI will create flashcards for you.
                 </p>
-                <button className='landing__cta' onClick={props.onStart}>Get Started</button>
+                <button className='landing__cta' onClick={handleStart}>Get Started</button>
             </header>
         </div>
     );
