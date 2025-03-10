@@ -4,7 +4,6 @@ import FlashcardGenerator from './components/FlashcardGenerator';
 import './App.scss';
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>

@@ -139,7 +139,6 @@ function FlashcardGenerator() {
             </div>
           </div>
         ) : (
-          // If no flashcards have been generated, show a placeholder message.
           <p className="flashcard-generator__no-cards">
             Enter a topic and upload notes (optional), then click "Generate Flashcards"
           </p>
