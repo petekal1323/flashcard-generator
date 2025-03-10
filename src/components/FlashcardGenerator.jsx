@@ -70,7 +70,7 @@ function FlashcardGenerator() {
                 <input
                     id="topicInput"
                     type="text"
-                    placeholder="Enter a topic (like World History"
+                    placeholder="Enter a topic (like World History)"
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     className="flashcard-generator__input"
