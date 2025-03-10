@@ -74,7 +74,6 @@ function FlashcardGenerator() {
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     className="flashcard-generator__input"
-                    required
                 />
                 </div>
 

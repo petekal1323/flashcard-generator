@@ -36,6 +36,11 @@ export async function generateFlashcards(topic, fileContent, numCards) {
     const apiOutput = res.data.choices[0].message.content;
     console.log("API output:", apiOutput);
 
+    if(!apiOutput || apiOutput.trim() === "") {
+      console.error("API response was empty");
+      return [];
+    }
+
     try {
       // Parse the API output as JSON.
       const flashcards = JSON.parse(apiOutput);
