@@ -7,7 +7,6 @@ export async function generateFlashcards(topic, fileContent, numCards) {
     return [];
   }
 
-  // Optionally, truncate fileContent to avoid sending an excessively long prompt.
   const safeFileContent = fileContent ? fileContent.substring(0, 2000) : '';
 
   const prompt =
@@ -18,43 +17,22 @@ export async function generateFlashcards(topic, fileContent, numCards) {
   const data = {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: prompt }],
-    max_tokens: 600, // Increase this value to allow for a complete response
+    max_tokens: 2000,
     temperature: 0.7
   };
 
-
   try {
-    const res = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`
-        }
+    const res = await axios.post("https://api.openai.com/v1/chat/completions", data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
       }
-    );
+    });
 
-    console.log('Full API response:', res.data);
-    const apiOutput = res.data.choices[0].message.content;
-    console.log("API output:", apiOutput);
-
-    // Clean up any markdown formatting that might be present.
-    const cleanedOutput = apiOutput
-      .replace(/^```(?:json)?/i, '')
-      .replace(/```$/, '')
-      .trim();
-
-    try {
-      const flashcards = JSON.parse(cleanedOutput);
-      return flashcards;
-    } catch (parseError) {
-      console.error("Error parsing JSON. Raw output:", cleanedOutput);
-      console.error("Parsing error details:", parseError);
-      return [];
-    }
+    const apiOutput = res.data.choices[0].message.content.trim().replace(/^```(?:json)?|```$/g, '');
+    return JSON.parse(apiOutput);
   } catch (error) {
-    console.error("API request error:", error);
+    console.error("API Error:", error);
     return [];
   }
 }

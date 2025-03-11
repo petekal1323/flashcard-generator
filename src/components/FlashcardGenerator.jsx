@@ -13,113 +13,93 @@ function FlashcardGenerator() {
   const [loading, setLoading] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
-  // Ref for the file input so we can clear its value on reset
   const fileInputRef = useRef(null);
 
-  function handleFileUpload(e) {
+  const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    // Get file extension
     const ext = file.name.split('.').pop().toLowerCase();
 
     if (ext === "docx") {
-      // Process DOCX files using Mammoth
       file.arrayBuffer().then(buffer => {
         mammoth.extractRawText({ arrayBuffer: buffer })
-          .then(result => {
-            console.log("Extracted DOCX text:", result.value);
-            setFileContent(result.value);
-          })
-          .catch(error => console.error("Error parsing DOCX:", error));
+          .then(result => setFileContent(result.value))
+          .catch(error => console.error("DOCX parsing error:", error));
       });
     } else if (ext === "pdf") {
-      // Process PDF files using pdfjs-dist (loaded dynamically)
       import("pdfjs-dist").then(pdfjsLib => {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
+
         const reader = new FileReader();
-        reader.onload = function () {
-          const typedarray = new Uint8Array(this.result);
-          pdfjsLib.getDocument(typedarray).promise.then(pdf => {
-            let promises = [];
-            for (let i = 1; i <= pdf.numPages; i++) {
-              promises.push(
-                pdf.getPage(i).then(page =>
-                  page.getTextContent().then(textContent => {
-                    return textContent.items.map(item => item.str).join(" ");
-                  })
-                )
-              );
+        reader.onload = async () => {
+          try {
+            const typedarray = new Uint8Array(reader.result);
+            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+            const maxPages = pdf.numPages;
+            const pageTexts = [];
+
+            for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
+              const page = await pdf.getPage(pageNum);
+              const textContent = await page.getTextContent();
+              const pageText = textContent.items.map(item => item.str).join(" ");
+              pageTexts.push(pageText);
             }
-            Promise.all(promises).then(pagesText => {
-              const allText = pagesText.join("\n");
-              console.log("Extracted PDF text:", allText);
-              setFileContent(allText);
-            });
-          }).catch(error => console.error("Error loading PDF:", error));
-        };
-        reader.onerror = function (error) {
-          console.error("Error reading PDF:", error);
+
+            const finalText = pageTexts.join("\n");
+            console.log("✅ Final extracted PDF text:", finalText); // Debugging confirmation
+            setFileContent(finalText);
+          } catch (error) {
+            console.error("⚠️ PDF parsing error:", error);
+          }
         };
         reader.readAsArrayBuffer(file);
+      }).catch(importError => {
+        console.error("⚠️ PDFJS import error:", importError);
       });
     } else if (ext === "txt") {
-      // Process TXT files using FileReader
       const reader = new FileReader();
-      reader.onload = function (e) {
-        console.log("Extracted TXT text:", e.target.result);
-        setFileContent(e.target.result);
-      };
-      reader.onerror = function (error) {
-        console.error("Error reading TXT file:", error);
-      };
+      reader.onload = e => setFileContent(e.target.result);
+      reader.onerror = error => console.error("TXT reading error:", error);
       reader.readAsText(file);
     } else {
-      console.error("Unsupported file type:", ext);
+      alert("Unsupported file type.");
     }
-  }
+  };
 
-  async function handleGenerateFlashcards(e) {
+  const handleGenerateFlashcards = async (e) => {
     e.preventDefault();
-    console.log("Generating flashcards...");
-    console.log("Topic:", topic);
-    console.log("File Content Length:", fileContent.length);
-    console.log("Number of Cards:", numCards);
     setLoading(true);
     try {
       const generatedFlashcards = await generateFlashcards(topic, fileContent, numCards);
-      console.log("Flashcards:", generatedFlashcards);
       setFlashcards(generatedFlashcards);
       setCurrentCardIndex(0);
     } catch (error) {
-      console.error("Error generating flashcards:", error);
+      console.error('Error generating flashcards:', error);
     }
     setLoading(false);
-  }
+  };
 
-  function goToNextCard() {
-    if (currentCardIndex < flashcards.length - 1) {
-      setCurrentCardIndex(currentCardIndex + 1);
-    }
-  }
-
-  function goToPrevCard() {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex(currentCardIndex - 1);
-    }
-  }
-
-  // Reset all state values and clear the file input
-  function handleReset() {
+  const handleReset = () => {
     setTopic('');
     setNumCards(10);
     setFileContent('');
     setFlashcards([]);
     setCurrentCardIndex(0);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const goToNextCard = () => {
+    if (currentCardIndex < flashcards.length - 1) {
+      setCurrentCardIndex(currentCardIndex + 1);
     }
-  }
+  };
+
+  const goToPrevCard = () => {
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex(currentCardIndex - 1);
+    }
+  };
 
   return (
     <div id="flashcard-generator__container">
@@ -144,7 +124,7 @@ function FlashcardGenerator() {
                 id="numCardsInput"
                 type="number"
                 value={numCards}
-                onChange={(e) => setNumCards(e.target.value)}
+                onChange={(e) => setNumCards(Number(e.target.value))}
                 className="flashcard-generator__input"
                 min="1"
               />
@@ -171,34 +151,17 @@ function FlashcardGenerator() {
 
           {!loading && flashcards.length > 0 && (
             <div className="flashcard-generator__display">
-              <div className="flashcard-generator__flashcard-container">
-                <Flashcard
-                  question={flashcards[currentCardIndex].question}
-                  answer={flashcards[currentCardIndex].answer}
-                />
-                <div className="flashcard-generator__nav">
-                  <button
-                    onClick={goToPrevCard}
-                    disabled={currentCardIndex === 0}
-                    className="flashcard-generator__nav-btn"
-                  >
-                    Prev
-                  </button>
-                  <span className="flashcard-generator__nav-count">
-                    {currentCardIndex + 1} / {flashcards.length}
-                  </span>
-                  <button
-                    onClick={goToNextCard}
-                    disabled={currentCardIndex === flashcards.length - 1}
-                    className="flashcard-generator__nav-btn"
-                  >
-                    Next
-                  </button>
-                </div>
+              <Flashcard
+                question={flashcards[currentCardIndex].question}
+                answer={flashcards[currentCardIndex].answer}
+              />
+              <div className="flashcard-generator__nav">
+                <button className="flashcard-generator__nav-btn" onClick={goToPrevCard} disabled={currentCardIndex === 0}>Prev</button>
+                <span>{currentCardIndex + 1}/{flashcards.length}</span>
+                <button className="flashcard-generator__nav-btn" onClick={goToNextCard} disabled={currentCardIndex === flashcards.length - 1}>Next</button>
               </div>
             </div>
           )}
-
         </div>
       </div>
     </div>
