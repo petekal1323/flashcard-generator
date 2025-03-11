@@ -1,12 +1,24 @@
-# React + Vite
+This was built with **React + Vite** and uses **OpenAI's API** to automatically generate study flashcards from any topic or uploaded notes.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+AI-Powered Flashcards Made Easy. Just enter a topic, choose the number of flashcards you'd like, optionally upload your study notes (DOCX, PDF, TXT), and instantly get customized flashcards generated with AI.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+[View the live application](YOUR_LIVE_VERCEL_URL_HERE)
+---
 
-## Expanding the ESLint configuration
+Follow these simple steps to run the app locally:
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**1. Clone the repo:**
+```bash
+git clone YOUR_REPO_URL
+
+cd your-app-directory
+
+npm install
+
+Create a .env file in the root of the project and add your OpenAI API key: VITE_OPENAI_API_KEY=your_openai_api_key_here
+
+npm run dev
+
+To view locally go to http://localhost:5173.
