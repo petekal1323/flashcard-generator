@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,9 +8,10 @@
 
 html, body {
     font-family: "Quicksand", sans-serif;
+    height: 100%;
+    background: linear-gradient(to left, #74ebd5, #7FABEC);
 }
 
-/* Explicitly set Quicksand for form elements */
 button,
 input,
 textarea,
@@ -20,18 +19,16 @@ select {
     font-family: "Quicksand", sans-serif;
 }
 
-/* Set Quicksand for placeholder text */
 input::placeholder,
 textarea::placeholder {
     font-family: "Quicksand", sans-serif;
 }
 
-/* Vendor prefixes for better cross-browser support */
+
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
     font-family: "Quicksand", sans-serif;
 }
-
 
 .App {
     min-height: 100vh;
@@ -40,5 +37,3 @@ textarea::-webkit-input-placeholder {
     justify-content: flex-start;
     align-items: center;
 }
-
-

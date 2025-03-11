@@ -11,9 +11,9 @@ function LandingPage() {
     return (
         <div className='landing__container'>
             <header className='landing__header'>
-                <h1 className='landing__title'>AI-Powered Flashcard Generator</h1>
+                <h1 className='landing__title'>AI-Powered Flashcards Made Easy</h1>
                 <p className='landing__subtitle'>
-                Enter your text or upload a file, and the AI will create flashcards for you.
+                Create customized flashcards instantly—powered by AI.
                 </p>
                 <button className='landing__cta' onClick={handleStart}>Get Started</button>
             </header>

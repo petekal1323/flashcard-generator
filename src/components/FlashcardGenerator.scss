@@ -1,164 +1,161 @@
-/* FlashcardGenerator.scss*/
+#flashcard-generator__container {
+    width: 100%;
+    min-height: 100vh;               // allows it to grow if needed
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto; // allows outer scrollbars if screen is too small
+    padding: 20px; // some padding so it's not touching screen edges
+  }
 
-.flashcard-generator {
-    padding: 1rem;
-    width: calc(100% - 50rem);
-    min-width: 350px;
-    margin: 0 auto;
-    text-align: center;
+  .flashcard-generator {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 20px;
+
     &__title {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: #333;
-        font-weight: 500;
-    }
-    &__form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
-    &__label {
-        display: block;
-        font-size: 0.8rem;
-        color: #888;
-        font-weight: 500;
-        text-align: left;
-        margin-top: 0.5rem;
-        margin-bottom: 3px;
-    }
-    &__input {
-        padding: 0.8rem;
-        font-size: 0.9rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 100%;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #333;
+      font-weight: 500;
+      text-align: center;
     }
 
+    &__form-display-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &__label {
+      font-size: 0.8rem;
+      color: #888;
+      font-weight: 500;
+      text-align: left;
+      margin: 0.5rem 0 3px;
+    }
+
+    &__input,
     &__file-input {
-        font-family: "Quicksand", sans-serif;
-        padding: 0.8rem;
-        font-size: 0.9rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 100%;
-        &::file-selector-button {
-            font-family: "Quicksand", sans-serif;
-            font-size: 12px;
-            background-color: white;
-            border: 1px solid black;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 20px;
-        }
-        &::-webkit-file-upload-button {
-            font-family: "Quicksand", sans-serif;
-            font-size: 12px;
-            background-color: white;
-            border: 1px solid black;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 20px;
-        }
+      padding: 0.8rem;
+      font-size: 0.9rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    &__file-input::file-selector-button,
+    &__file-input::-webkit-file-upload-button {
+      font-size: 12px;
+      background-color: white;
+      border: 1px solid black;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 20px;
     }
 
     &__btn-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-        width: 90%;
-        margin: 10px auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 1rem;
     }
 
-    &__btn {
-        &--generate {
-            order: 1; // This button comes first
-            flex: 0 0 20rem; // Base width of 20rem, flexible sizing
-            align-self: center;
-            padding: 0.8rem;
-            font-size: 1rem;
-            font-weight: bold;
-            margin-top: 1rem;
-            cursor: pointer;
-            transition:
-                background-color 0.3s ease,
-                transform 0.3s ease;
-            color: #fff;
-            background-color: hsl(9, 100%, 70%);
-            border: none;
-            border-radius: 5px;
-            &:hover {
-                background-color: hsl(9, 100%, 65%);
-                transform: scale(1.03);
-            }
-            &:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
-        }
+    &__btn--generate, &__btn--reset {
+      flex: 1;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
 
-        &--reset {
-            order: 2; // This button always comes after the other button
-            flex: 0 0 20rem; // Same base width; adjust if needed
-            align-self: center;
-            padding: 0.8rem;
-            font-size: 1rem;
-            font-weight: bold;
-            margin-top: 1rem;
-            cursor: pointer;
-            transition:
-                background-color 0.3s ease,
-                transform 0.3s ease;
-            color: hsl(9, 100%, 70%);
-            background-color: white;
-            border: 1px solid hsl(9, 100%, 70%);
-            border-radius: 5px;
-            &:hover {
-                background-color: hsl(9, 100%, 65%);
-                transform: scale(1.03);
-            }
-            &:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
-        }
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
     }
+
+    &__btn--generate {
+      background-color: hsl(9, 100%, 70%);
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: hsl(9, 100%, 65%);
+        transform: scale(1.03);
+      }
+    }
+
+    &__btn--reset {
+      background-color: #fff;
+      color: hsl(9, 100%, 70%);
+      border: 1px solid hsl(9, 100%, 70%);
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+
+    &__display {
+      width: 100%;
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+    }
+
     &__flashcard-container {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 1rem;
-        border-radius: 8px;
-        background-color: #fff;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
+
     &__nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-        margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 15px;
     }
+
     &__nav-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        background-color: hsl(195, 41%, 44%);
-        color: #fff;
-        transition: background-color 0.3s ease;
-        &:hover {
-            background-color: hsl(195, 41%, 38%);
-        }
-        &:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: hsl(195, 41%, 44%);
+      color: #fff;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: hsl(195, 41%, 38%);
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
     }
+
     &__nav-count {
-        font-size: 1rem;
-        color: #333;
+      font-size: 1rem;
+      color: #333;
+      font-weight: 500;
     }
-}
+  }
