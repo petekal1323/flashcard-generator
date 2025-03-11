@@ -4,7 +4,7 @@ This was built with **React + Vite** and uses **OpenAI's API** to automatically 
 AI-Powered Flashcards Made Easy. Just enter a topic, choose the number of flashcards you'd like, optionally upload your study notes (DOCX, PDF, TXT), and instantly get customized flashcards generated with AI.
 
 ---
-[View the live application](YOUR_LIVE_VERCEL_URL_HERE)
+[Click here to view live](YOUR_LIVE_VERCEL_URL_HERE)
 ---
 
 Follow these simple steps to run the app locally:
