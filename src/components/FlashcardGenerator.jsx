@@ -11,6 +11,7 @@ function FlashcardGenerator() {
   const [fileContent, setFileContent] = useState('');
   const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const fileInputRef = useRef(null);
@@ -69,6 +70,13 @@ function FlashcardGenerator() {
 
   const handleGenerateFlashcards = async (e) => {
     e.preventDefault();
+
+    if(!topic.trim() && !fileContent.trim()){
+      setErrorMessage("Please enter a topic or upload file content.");
+      return;
+    }
+    setErrorMessage("");
+
     setLoading(true);
     try {
       const generatedFlashcards = await generateFlashcards(topic, fileContent, numCards);
@@ -130,7 +138,7 @@ function FlashcardGenerator() {
               />
             </div>
             <div>
-              <label htmlFor="fileInput" className="flashcard-generator__label">Upload notes (optional)</label>
+              <label htmlFor="fileInput" className="flashcard-generator__label">Upload notes <i>(optional)</i>. &nbsp;Supported file types: .docx, .pdf, .txt</label>
               <input
                 id="fileInput"
                 type="file"
@@ -139,6 +147,9 @@ function FlashcardGenerator() {
                 className="flashcard-generator__file-input"
               />
             </div>
+
+            {errorMessage && <p className="flashcard-generator__error">{errorMessage}</p>}
+
             <div className="flashcard-generator__btn-container">
               <button type="submit" className="flashcard-generator__btn--generate" disabled={loading}>
                 {loading ? "Generating..." : "Generate Flashcards"}

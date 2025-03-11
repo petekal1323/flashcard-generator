@@ -66,6 +66,15 @@
       margin-right: 20px;
     }
 
+    &__error {
+      color: red;
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 5px;
+      display: block;
+    }
+
     &__btn-container {
       display: flex;
       justify-content: space-between;
